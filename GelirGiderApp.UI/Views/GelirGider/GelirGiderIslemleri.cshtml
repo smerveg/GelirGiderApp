@@ -1,0 +1,104 @@
+﻿
+@model IEnumerable<GelirGiderApp.UI.Models.GelirGiderVM>
+
+
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">İşlem Listesi</h4>
+            <span><a asp-controller="GelirGider" asp-action="Add" class="btn btn-round btn-primary">Ekle</a></span>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead class=" text-primary">
+                    <th>
+                        @Html.DisplayNameFor(model => model.Baslik)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Tarih)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TurAd)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.UrunAd)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.KategoriAd)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Miktar)
+                    </th>
+                    <th>
+                        Güncelle
+                    </th>
+                    <th>
+                        Sil
+                    </th>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Baslik)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Tarih)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TurAd)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.UrunAd)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.KategoriAd)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Miktar)
+                            </td>
+                            <td>
+                                <a asp-controller="GelirGider" asp-action="Update" asp-route-id="@item.GelirGiderID" class="btn btn-round btn-primary">Güncelle</a>
+                            </td>
+                            <td>
+                                <input id="btnDelete" type="submit" value="Sil" class="btn btn-round btn-primary" onclick="Delete(@item.GelirGiderID)" />
+                            </td>
+
+                        </tr>
+
+
+                        }
+
+                    </tbody>
+
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    function Delete(id) {
+        $('#btnDelete').click(function (e) {
+            $.ajax
+                ({
+                    type: "POST",
+                    data: JSON.stringify({ id: id }),
+                    url:"/GelirGider/Delete/"+id,
+
+
+                    success: function () {
+                    alert("Silme işlemi gerçekleşmiştir.");
+                        window.location.href = "/GelirGiderIslemleri";
+                    },
+                    error: function () {
+                    alert("Silme işlemi sırasında bir hata meydana gelmiştir.");
+                    }
+
+                    });
+                    });
+
+                    }
+ </script>

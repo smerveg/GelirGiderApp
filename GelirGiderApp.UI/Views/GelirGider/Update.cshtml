@@ -1,0 +1,139 @@
+﻿@model GelirGiderApp.UI.Models.GelirGiderVM
+
+<script src="~/js/site.js"></script>
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title"> İşlem Güncelle</h4>
+        </div>
+        <div class="card-body">
+            <form asp-action="Update">
+
+                <div class="row">
+                    <div class="col-md-6 pr-1">
+                        <div class="form-group">
+                          
+                            @foreach (var item in ViewBag.TurList as Dictionary<int, string>)
+                            {
+                                <div class="form-check form-check-inline">
+                                    <input type="radio" asp-for="TurID" value="@item.Key" class="form-control">
+                                    <label class="form-check-label" for="inlineCheckbox1">@item.Value</label>
+                                </div>
+
+                            }
+
+                        </div>
+                    </div>
+                    <div class="col-md-6 pl-1">
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 pr-1">
+                        <div class="form-group">
+                            <label>Başlık</label>
+                            <input type="text" asp-for="Baslik" class="form-control">
+                            <span asp-validation-for="Baslik" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 pl-1">
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 pr-1">
+                        <div class="form-group">
+                            <label>Tarih</label>
+                            <input asp-for="Tarih" class="form-control">
+                            <span asp-validation-for="Tarih" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 pl-1">
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 pr-1">
+                        <div class="form-group">
+                            <label>Urun</label>
+                            <select asp-for="UrunID" class="form-control dropdown-toggle"
+                                    asp-items="@(new SelectList(ViewBag.UrunList as Dictionary<int,string>,"Key","Value"))">
+                                <option class="dropdown-menu dropdown-menu"></option>
+                            </select>
+                            <span asp-validation-for="UrunID" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 pl-1">
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 pr-1">
+                        <div class="form-group">
+                            <label>Kategori</label>
+                            <select asp-for="KategoriID" class="form-control dropdown-toggle"
+                                    asp-items="@(new SelectList(ViewBag.KategoriList as Dictionary<int,string>,"Key","Value"))">
+                                <option class="dropdown-menu dropdown-menu"></option>
+                            </select>
+                            <span asp-validation-for="KategoriID" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 pl-1">
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 pr-1">
+                        <div class="form-group">
+                            <label>Miktar</label>
+                            <input type="text" asp-for="Miktar" class="form-control">
+                            <span asp-validation-for="Miktar" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 pl-1">
+
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-md-6 pr-1">
+                        <div class="form-group">
+                            <input id="btnGuncelle" type="submit" value="Güncelle" class="btn btn-round btn-primary" onclick="Update()" />
+
+                        </div>
+                    </div>
+                    <div class="col-md-6 pl-1">
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+<script>
+
+    function Update() {
+        $('#btnUpdate').click(function (e) {
+            $.ajax
+                ({
+                    type: "POST",          
+                    data: $('#update').serialize(),
+                    url:"/GelirGider/Update",
+
+
+                    success: function () {
+                        alert("Güncelleme işlemi gerçekleşmiştir.");
+                        window.location.href = "/GelirGiderIslemleri";
+                    },
+                    error: function () {
+                        alert("Güncelleme işlemi sırasında bir hata meydana gelmiştir.");
+                    }
+
+                });
+        });
+
+    }
+</script>
+
